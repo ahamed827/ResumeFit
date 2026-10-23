@@ -1,0 +1,20 @@
+Marcus Aurelius Vance
+marcus.vance@example.com | (555) 567-8901 | Boston, MA
+github.com/mvance-ai | linkedin.com/in/marcus-vance-ai
+
+Summary:
+Machine Learning engineer graduate specializing in NLP, LLMs, PyTorch, and vector databases. Strong background in fine-tuning and retrieval-augmented generation.
+
+Education:
+B.S. in Computer Science (AI Concentration), 2024 | Northeastern University
+
+Technical Skills:
+Python, PyTorch, Hugging Face, LangChain, OpenAI API, Vector DBs (Chroma, Pinecone), Pandas, NumPy, Docker, Git
+
+Featured Projects:
+Project: Document QA with RAG Architecture
+- Built retrieval pipeline utilizing PyTorch, LangChain, and OpenAI embeddings to answer questions on PDF corpuses.
+- Evaluated hallucination reduction and context retrieval accuracy.
+
+Project: Sentiment Analysis Transformer
+- Fine-tuned BERT model on financial disclosures achieving 91.5% F1-score.

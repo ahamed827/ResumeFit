@@ -1,0 +1,25 @@
+David Chen
+david.chen@example.com | (555) 234-5678 | Seattle, WA
+github.com/dchen-backend | linkedin.com/in/dchen-eng
+
+Summary:
+Backend software engineer with 1 year internship experience designing scalable microservices in Python, FastAPI, and PostgreSQL.
+
+Education:
+Bachelor of Science in Software Engineering, 2024
+University of Washington - GPA 3.7
+
+Technical Skills:
+Languages: Python, SQL, Bash
+Frameworks: FastAPI, Django, Flask, SQLAlchemy, Alembic
+Databases & Infra: PostgreSQL, Redis, Docker, Git, Linux, REST APIs
+
+Work Experience:
+Software Engineer Intern | CloudScale Solutions (June 2023 - Sept 2023)
+- Designed high-throughput REST APIs using FastAPI and PostgreSQL handling 2M daily requests.
+- Optimized database query indexing, cutting response latency by 42%.
+
+Featured Projects:
+Project: Distributed Job Worker Engine
+- Implemented background task queue utilizing Python, Redis, and PostgreSQL transactions.
+- Automated Docker container deployment with multi-stage builds.

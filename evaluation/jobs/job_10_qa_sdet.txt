@@ -1,0 +1,15 @@
+Junior QA Automation Engineer (SDET)
+Company: QualityFirst Software
+Location: Atlanta, GA (Hybrid)
+Seniority: Entry Level
+
+Must-Have Requirements:
+- Python programming skills for test automation.
+- Experience writing automated tests using Pytest, Selenium, or Playwright.
+- Understanding of software QA methodologies and defect lifecycle.
+- Git version control.
+
+Nice-To-Have Skills:
+- API testing with Postman or REST-assured.
+- CI/CD integration with GitHub Actions.
+- Docker containers for test environments.

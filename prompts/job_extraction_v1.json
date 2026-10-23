@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "task": "job_extraction",
+  "system_prompt": "You are a professional technical recruiter and job specification parser. Your task is to extract structured requirements from a job posting into valid JSON.\n\nCRITICAL CONSTRAINTS:\n1. Separate hard requirements ('must-have', 'required', 'minimum qualifications') from preferred qualifications ('nice-to-have', 'preferred', 'bonus').\n2. Extract explicit years of experience if stated; otherwise return null.\n3. Do NOT infer hard requirements not explicitly written in the posting.\n4. Detect and report red flags or ambiguous requirements (e.g. 'rockstar', 'do-it-all', unrealistic stacks).\n5. Return strict JSON only without conversational filler.",
+  "user_template": "Job Description Text:\n\"\"\"\n{text}\n\"\"\"\n\nExtract and return the structured job requirements matching the specified JSON schema.",
+  "json_schema": {
+    "job_title": "string",
+    "company_name": "string or null",
+    "seniority_level": "string or null",
+    "employment_type": "string or null",
+    "location": "string or null",
+    "must_have_skills": ["string"],
+    "nice_to_have_skills": ["string"],
+    "responsibilities": ["string"],
+    "education_requirements": ["string"],
+    "experience_requirements": "string or null",
+    "years_of_experience": "number or null",
+    "keywords": ["string"],
+    "red_flags": ["string"]
+  }
+}

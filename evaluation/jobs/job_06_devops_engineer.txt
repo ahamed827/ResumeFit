@@ -1,0 +1,15 @@
+Junior DevOps / Cloud Engineer
+Company: InfraCore
+Location: Remote
+Seniority: Entry Level
+
+Must-Have Requirements:
+- Deep familiarity with Linux environments and Bash scripting.
+- Practical experience containerizing applications with Docker.
+- Experience setting up CI/CD workflows using GitHub Actions or GitLab.
+- Basic understanding of cloud infrastructure (AWS, GCP, or Azure).
+
+Nice-To-Have Skills:
+- Kubernetes (K8s) orchestration basics.
+- Infrastructure as Code with Terraform.
+- Monitoring with Prometheus and Grafana.

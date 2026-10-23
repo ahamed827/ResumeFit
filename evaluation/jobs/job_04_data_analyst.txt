@@ -1,0 +1,14 @@
+Junior Data Analyst
+Company: Insights Growth Corp
+Location: Chicago, IL
+Seniority: Entry Level
+
+Must-Have Requirements:
+- Strong SQL proficiency for querying large relational datasets.
+- Python programming skills with data manipulation libraries (Pandas, NumPy).
+- Experience building dashboards in Tableau, PowerBI, or equivalent BI tools.
+- Strong analytical and communication abilities.
+
+Nice-To-Have Skills:
+- Statistical modeling and regression analysis.
+- Experience with cloud data warehouses (Snowflake, BigQuery).

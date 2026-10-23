@@ -1,0 +1,107 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: resumefit_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-resumefit_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-resumefit_secure_password}
+      POSTGRES_DB: ${POSTGRES_DB:-resumefit_db}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-resumefit_user} -d ${POSTGRES_DB:-resumefit_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: resumefit_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: resumefit_backend
+    restart: unless-stopped
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./backend:/app
+      - backend_uploads:/app/uploads
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-resumefit_user}:${POSTGRES_PASSWORD:-resumefit_secure_password}@postgres:5432/${POSTGRES_DB:-resumefit_db}
+      - DATABASE_SYNC_URL=postgresql://${POSTGRES_USER:-resumefit_user}:${POSTGRES_PASSWORD:-resumefit_secure_password}@postgres:5432/${POSTGRES_DB:-resumefit_db}
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY:-change-me-super-secret-hex-token-min-32-chars-long-for-production!}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - LLM_PROVIDER=${LLM_PROVIDER:-local_heuristic}
+      - LOCAL_STORAGE_DIR=/app/uploads
+      - ALLOWED_CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: resumefit_worker
+    restart: unless-stopped
+    command: python -m app.workers.worker
+    volumes:
+      - ./backend:/app
+      - backend_uploads:/app/uploads
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-resumefit_user}:${POSTGRES_PASSWORD:-resumefit_secure_password}@postgres:5432/${POSTGRES_DB:-resumefit_db}
+      - DATABASE_SYNC_URL=postgresql://${POSTGRES_USER:-resumefit_user}:${POSTGRES_PASSWORD:-resumefit_secure_password}@postgres:5432/${POSTGRES_DB:-resumefit_db}
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY:-change-me-super-secret-hex-token-min-32-chars-long-for-production!}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - LLM_PROVIDER=${LLM_PROVIDER:-local_heuristic}
+      - LOCAL_STORAGE_DIR=/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: resumefit_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  redis_data:
+  backend_uploads:

@@ -1,0 +1,14 @@
+Associate Site Reliability Engineer (SRE)
+Company: Global Platform Systems
+Location: Remote
+Seniority: Entry Level
+
+Must-Have Requirements:
+- Linux system administration and command line troubleshooting.
+- Python or Go scripting for system automation.
+- Understanding of networking protocols (TCP/IP, HTTP, DNS).
+- Knowledge of Docker and CI/CD pipelines.
+
+Nice-To-Have Skills:
+- Kubernetes cluster monitoring.
+- Terraform infrastructure provisioning.

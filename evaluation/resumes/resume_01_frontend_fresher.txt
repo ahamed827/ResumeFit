@@ -1,0 +1,24 @@
+Alex Rivera
+alex.rivera@example.com | (555) 123-4567 | San Francisco, CA
+linkedin.com/in/alex-rivera-dev | github.com/arivera-code
+
+Summary:
+Computer Science graduate with deep experience in React, TypeScript, and modern frontend styling. Passionate about building accessible, performant single-page applications.
+
+Education:
+Bachelor of Science in Computer Science, 2024
+University of California, Davis - GPA 3.8
+
+Technical Skills:
+Frontend: React, Next.js, TypeScript, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS, Redux Toolkit
+Tools: Git, GitHub, Figma, Jest, React Testing Library, Vite
+
+Featured Projects:
+Project: E-Commerce Storefront
+- Built responsive shopping platform with React, Next.js App Router, and Tailwind CSS.
+- Integrated Stripe payments and cart state management using Zustand.
+- Achieved 98+ Google Lighthouse performance score.
+
+Project: Interactive Kanban Board
+- Developed drag-and-drop task management tool using React and TypeScript.
+- Implemented optimistic updates and local storage state persistence.

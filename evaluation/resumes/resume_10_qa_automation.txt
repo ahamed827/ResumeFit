@@ -1,0 +1,11 @@
+Kevin O'Connor
+kevin.oconnor@example.com | (555) 012-3456 | Atlanta, GA
+
+Summary:
+Software Development Engineer in Test (SDET) experienced in automated testing with Python, Pytest, Selenium, Playwright, and CI/CD pipelines.
+
+Education:
+B.S. in Computer Science, 2024 | Georgia Tech
+
+Technical Skills:
+Python, Pytest, Playwright, Selenium, Postman, Docker, Git, CI/CD, SQL

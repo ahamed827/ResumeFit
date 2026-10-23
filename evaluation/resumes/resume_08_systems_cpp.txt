@@ -1,0 +1,11 @@
+Julian Wright
+julian.wright@example.com | (555) 890-1234 | Pittsburgh, PA
+
+Summary:
+Systems software developer skilled in C++, C, Linux systems programming, multithreading, and low-latency algorithms.
+
+Education:
+B.S. in Computer Science, 2024 | Carnegie Mellon University
+
+Technical Skills:
+C++, C, Linux, POSIX Threads, GDB, CMake, Git, Socket Programming, Python

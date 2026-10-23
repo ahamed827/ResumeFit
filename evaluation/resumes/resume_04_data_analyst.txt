@@ -1,0 +1,20 @@
+Priya Sharma
+priya.sharma@example.com | (555) 456-7890 | Chicago, IL
+linkedin.com/in/priya-sharma-data
+
+Summary:
+Data Analyst with strong expertise in SQL, Python, Tableau, and statistical modeling. Passionate about transforming raw data into actionable executive insights.
+
+Education:
+B.S. in Data Science and Statistics, 2024 | University of Illinois Urbana-Champaign
+
+Technical Skills:
+Languages: SQL, Python, R
+Libraries: Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn
+Visualization & BI: Tableau, PowerBI, Excel
+Databases: PostgreSQL, Snowflake, BigQuery
+
+Featured Projects:
+Project: Customer Churn Prediction Analysis
+- Analyzed 50,000+ customer records using Python and Pandas; trained logistic regression model predicting churn with 84% accuracy.
+- Built interactive Tableau dashboard for executive stakeholder reporting.

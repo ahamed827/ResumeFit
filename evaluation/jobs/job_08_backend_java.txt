@@ -1,0 +1,15 @@
+Junior Backend Developer (Java / Spring)
+Company: Enterprise FinTech
+Location: Charlotte, NC
+Seniority: Entry Level
+
+Must-Have Requirements:
+- Strong proficiency in Java (Java 17+ preferred).
+- Understanding of Spring Boot framework and MVC patterns.
+- Experience with relational databases and SQL (PostgreSQL or Oracle).
+- Bachelor's degree in Computer Science.
+
+Nice-To-Have Skills:
+- Docker container deployment.
+- JUnit testing and mockito.
+- RESTful microservices.

@@ -1,0 +1,15 @@
+AI / Machine Learning Engineer
+Company: CognitiveEdge AI
+Location: Boston, MA (Hybrid)
+Seniority: Entry / Junior Level
+
+Must-Have Requirements:
+- Strong programming skills in Python.
+- Hands-on experience with deep learning frameworks (PyTorch or TensorFlow).
+- Familiarity with modern NLP techniques, Hugging Face, and transformer architectures.
+- Bachelor's degree in Computer Science, AI, or Mathematics.
+
+Nice-To-Have Skills:
+- Experience building Retrieval-Augmented Generation (RAG) pipelines.
+- Familiarity with vector databases (Chroma, Pinecone) and OpenAI APIs.
+- Docker containerization for model serving.

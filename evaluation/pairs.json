@@ -1,0 +1,212 @@
+[
+  {
+    "resume_id": "resume_01",
+    "resume_file": "resume_01_frontend_fresher.txt",
+    "job_id": "job_01",
+    "job_file": "job_01_frontend_dev.txt",
+    "expected_alignment": "high"
+  },
+  {
+    "resume_id": "resume_01",
+    "resume_file": "resume_01_frontend_fresher.txt",
+    "job_id": "job_02",
+    "job_file": "job_02_backend_python.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_01",
+    "resume_file": "resume_01_frontend_fresher.txt",
+    "job_id": "job_03",
+    "job_file": "job_03_fullstack_nextjs.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_02",
+    "resume_file": "resume_02_backend_python.txt",
+    "job_id": "job_01",
+    "job_file": "job_01_frontend_dev.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_02",
+    "resume_file": "resume_02_backend_python.txt",
+    "job_id": "job_02",
+    "job_file": "job_02_backend_python.txt",
+    "expected_alignment": "high"
+  },
+  {
+    "resume_id": "resume_02",
+    "resume_file": "resume_02_backend_python.txt",
+    "job_id": "job_03",
+    "job_file": "job_03_fullstack_nextjs.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_03",
+    "resume_file": "resume_03_fullstack_ts.txt",
+    "job_id": "job_01",
+    "job_file": "job_01_frontend_dev.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_03",
+    "resume_file": "resume_03_fullstack_ts.txt",
+    "job_id": "job_02",
+    "job_file": "job_02_backend_python.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_03",
+    "resume_file": "resume_03_fullstack_ts.txt",
+    "job_id": "job_03",
+    "job_file": "job_03_fullstack_nextjs.txt",
+    "expected_alignment": "high"
+  },
+  {
+    "resume_id": "resume_04",
+    "resume_file": "resume_04_data_analyst.txt",
+    "job_id": "job_01",
+    "job_file": "job_01_frontend_dev.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_04",
+    "resume_file": "resume_04_data_analyst.txt",
+    "job_id": "job_02",
+    "job_file": "job_02_backend_python.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_04",
+    "resume_file": "resume_04_data_analyst.txt",
+    "job_id": "job_03",
+    "job_file": "job_03_fullstack_nextjs.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_05",
+    "resume_file": "resume_05_aiml_graduate.txt",
+    "job_id": "job_01",
+    "job_file": "job_01_frontend_dev.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_05",
+    "resume_file": "resume_05_aiml_graduate.txt",
+    "job_id": "job_02",
+    "job_file": "job_02_backend_python.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_05",
+    "resume_file": "resume_05_aiml_graduate.txt",
+    "job_id": "job_03",
+    "job_file": "job_03_fullstack_nextjs.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_06",
+    "resume_file": "resume_06_devops_cloud.txt",
+    "job_id": "job_01",
+    "job_file": "job_01_frontend_dev.txt",
+    "expected_alignment": "medium"
+  },
+  {
+    "resume_id": "resume_06",
+    "resume_file": "resume_06_devops_cloud.txt",
+    "job_id": "job_02",
+    "job_file": "job_02_backend_python.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_06",
+    "resume_file": "resume_06_devops_cloud.txt",
+    "job_id": "job_03",
+    "job_file": "job_03_fullstack_nextjs.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_07",
+    "resume_file": "resume_07_mobile_crossplatform.txt",
+    "job_id": "job_01",
+    "job_file": "job_01_frontend_dev.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_07",
+    "resume_file": "resume_07_mobile_crossplatform.txt",
+    "job_id": "job_02",
+    "job_file": "job_02_backend_python.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_07",
+    "resume_file": "resume_07_mobile_crossplatform.txt",
+    "job_id": "job_03",
+    "job_file": "job_03_fullstack_nextjs.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_08",
+    "resume_file": "resume_08_systems_cpp.txt",
+    "job_id": "job_01",
+    "job_file": "job_01_frontend_dev.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_08",
+    "resume_file": "resume_08_systems_cpp.txt",
+    "job_id": "job_02",
+    "job_file": "job_02_backend_python.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_08",
+    "resume_file": "resume_08_systems_cpp.txt",
+    "job_id": "job_03",
+    "job_file": "job_03_fullstack_nextjs.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_09",
+    "resume_file": "resume_09_cloud_architect.txt",
+    "job_id": "job_01",
+    "job_file": "job_01_frontend_dev.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_09",
+    "resume_file": "resume_09_cloud_architect.txt",
+    "job_id": "job_02",
+    "job_file": "job_02_backend_python.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_09",
+    "resume_file": "resume_09_cloud_architect.txt",
+    "job_id": "job_03",
+    "job_file": "job_03_fullstack_nextjs.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_10",
+    "resume_file": "resume_10_qa_automation.txt",
+    "job_id": "job_01",
+    "job_file": "job_01_frontend_dev.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_10",
+    "resume_file": "resume_10_qa_automation.txt",
+    "job_id": "job_02",
+    "job_file": "job_02_backend_python.txt",
+    "expected_alignment": "low"
+  },
+  {
+    "resume_id": "resume_10",
+    "resume_file": "resume_10_qa_automation.txt",
+    "job_id": "job_03",
+    "job_file": "job_03_fullstack_nextjs.txt",
+    "expected_alignment": "low"
+  }
+]

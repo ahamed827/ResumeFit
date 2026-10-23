@@ -1,0 +1,20 @@
+Sarah Jenkins
+sarah.jenkins@example.com | (555) 345-6789 | Austin, TX
+github.com/sjenkins-fullstack | linkedin.com/in/sarah-jenkins-dev
+
+Summary:
+Full-stack engineer skilled in TypeScript, Next.js, Node.js, and PostgreSQL. Experienced in building production web applications from concept to deployment.
+
+Education:
+B.S. in Computer Science, 2024 | University of Texas at Austin
+
+Technical Skills:
+TypeScript, JavaScript, React, Next.js, Node.js, Express, PostgreSQL, Prisma, Docker, Tailwind CSS, CI/CD, Git
+
+Featured Projects:
+Project: ResumeFit Platform
+- Architected full-stack resume analysis engine with Next.js frontend and PostgreSQL database.
+- Implemented JWT authentication with refresh token rotation and role-based permissions.
+
+Project: Real-Time Team Chat Application
+- Built instant messaging app with Node.js, WebSockets, and Redis pub/sub.

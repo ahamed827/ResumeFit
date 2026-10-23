@@ -1,0 +1,17 @@
+Frontend Developer (React / TypeScript)
+Company: ModernWeb Labs
+Location: Remote
+Employment Type: Full-time
+Seniority: Junior / Entry Level
+
+We are looking for an ambitious Frontend Developer to craft beautiful user experiences.
+Must-Have Requirements:
+- Proficiency in React, TypeScript, and modern JavaScript.
+- Strong knowledge of HTML5, CSS3, and responsive UI design (Tailwind CSS preferred).
+- Familiarity with version control using Git and GitHub.
+- Bachelor's degree in Computer Science or related STEM field.
+
+Nice-To-Have Skills:
+- Experience with Next.js App Router.
+- Familiarity with Jest or component unit testing.
+- UI/UX design sense with Figma.

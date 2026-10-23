@@ -1,0 +1,16 @@
+Junior Backend Engineer (Python)
+Company: DataStream Systems
+Location: San Francisco, CA (Hybrid)
+Seniority: Entry Level
+
+Join our core platform engineering team building robust distributed services.
+Must-Have Requirements:
+- Hands-on experience with Python and RESTful API frameworks (FastAPI, Django, or Flask).
+- Solid foundation in relational databases (PostgreSQL or MySQL) and SQL query writing.
+- Understanding of containerization with Docker.
+- Strong computer science fundamentals in data structures and algorithms.
+
+Nice-To-Have Skills:
+- Redis caching and background task queues.
+- Asynchronous programming with asyncio and SQLAlchemy.
+- Linux CLI and Bash scripting.

@@ -1,0 +1,14 @@
+Cloud Software Engineer
+Company: Scalable Cloud Inc
+Location: New York, NY
+Seniority: Junior Level
+
+Must-Have Requirements:
+- Hands-on experience with AWS cloud services (Lambda, S3, RDS).
+- Proficiency in Python or Node.js.
+- Strong understanding of RESTful API principles and SQL databases.
+
+Nice-To-Have Skills:
+- AWS Certified Cloud Practitioner or Solutions Architect Associate.
+- Infrastructure as Code with Terraform.
+- Docker container management.

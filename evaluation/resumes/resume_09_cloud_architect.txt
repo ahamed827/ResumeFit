@@ -1,0 +1,11 @@
+Amina Al-Mansoor
+amina.mansoor@example.com | (555) 901-2345 | New York, NY
+
+Summary:
+Cloud enthusiast certified in AWS Solutions Architecture with hands-on skills in Python, serverless architectures, and PostgreSQL.
+
+Education:
+B.S. in Computer Information Systems, 2024 | NYU
+
+Technical Skills:
+AWS (Lambda, S3, RDS, DynamoDB), Python, SQL, PostgreSQL, Terraform, Git, Docker

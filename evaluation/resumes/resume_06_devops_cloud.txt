@@ -1,0 +1,17 @@
+Elena Rostova
+elena.rostova@example.com | (555) 678-9012 | Denver, CO
+github.com/erostova-devops
+
+Summary:
+Junior DevOps Engineer passionate about Infrastructure as Code, Docker containerization, Kubernetes, and automated CI/CD deployment pipelines.
+
+Education:
+B.S. in Information Technology, 2024 | Colorado State University
+
+Technical Skills:
+Docker, Kubernetes, AWS, Terraform, GitHub Actions, Linux, Bash, Python, Prometheus, Grafana, Git
+
+Featured Projects:
+Project: Automated Kubernetes Microservice Deployment
+- Provisioned AWS EKS cluster using Terraform; configured Helm charts and ingress routing.
+- Built automated GitHub Actions CI/CD pipeline building Docker images and running tests.

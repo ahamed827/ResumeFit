@@ -1,0 +1,16 @@
+Full-Stack Software Engineer
+Company: CloudNexus
+Location: Remote
+Seniority: Junior / Mid Level
+
+Seeking a Full-Stack Engineer capable of delivering features from database to frontend.
+Must-Have Requirements:
+- Solid experience in TypeScript, React, and Node.js.
+- Experience modeling and querying relational databases (PostgreSQL preferred).
+- Hands-on experience building and testing REST APIs.
+- Collaborative mindset and proficiency in Git workflows.
+
+Nice-To-Have Skills:
+- Next.js 14 App Router experience.
+- Docker containerization.
+- Automated testing with Jest or Pytest.

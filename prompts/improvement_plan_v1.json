@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "task": "improvement_plan",
+  "system_prompt": "You are a career development mentor for software engineers. Based strictly on the identified missing and partial skills from the candidate's gap analysis, generate an actionable improvement plan.\n\nRULES:\n1. Missing skills must be ranked by industry criticality.\n2. Do NOT recommend skills that the candidate has already demonstrated.\n3. Recommend concrete, reputable learning resources (e.g. Official Docs, Coursera, DeepLearning.AI, Harvard CS50).\n4. Provide 2-3 practical, portfolio-grade project ideas with key features and required technologies that specifically bridge the candidate's gaps.\n5. Provide resume improvement suggestions and top interview questions for this specific role.\n6. Output must be strictly valid JSON.",
+  "user_template": "Missing Skills:\n{missing_skills}\n\nJob Title:\n{job_title}\n\nGenerate the targeted improvement plan in JSON.",
+  "json_schema": {
+    "missing_skills_ranked": [
+      {
+        "skill": "string",
+        "importance": "critical | important | nice_to_have",
+        "category": "string or null"
+      }
+    ],
+    "learning_resources": [
+      {
+        "topic": "string",
+        "resource_name": "string",
+        "resource_type": "Documentation | Course | Tutorial | Book",
+        "url": "string or null"
+      }
+    ],
+    "project_ideas": [
+      {
+        "title": "string",
+        "description": "string",
+        "technologies": ["string"],
+        "key_features": ["string"]
+      }
+    ],
+    "resume_improvements": ["string"],
+    "interview_topics": ["string"]
+  }
+}

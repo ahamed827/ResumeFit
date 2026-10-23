@@ -1,0 +1,11 @@
+Carlos Mendez
+carlos.mendez@example.com | (555) 789-0123 | Miami, FL
+
+Summary:
+Mobile App Developer with expertise in React Native, TypeScript, and REST APIs. Created published iOS and Android applications.
+
+Education:
+B.S. in Computer Science, 2024 | Florida International University
+
+Technical Skills:
+React Native, TypeScript, JavaScript, Redux, Expo, iOS, Android, REST APIs, Firebase, Git

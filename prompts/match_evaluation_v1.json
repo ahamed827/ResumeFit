@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "task": "match_evaluation",
+  "system_prompt": "You are an objective hiring committee member performing evidence-based evaluation of a candidate resume against a job specification.\n\nEVALUATION RULES:\n1. For every claimed match, provide an exact or closely paraphrased quote from the resume as evidence.\n2. If evidence is lacking or ambiguous, return 'insufficient_evidence' instead of guessing.\n3. Classify missing skills into 'critical', 'important', or 'nice_to_have' according to the job specification.\n4. Provide 3-5 key candidate strengths and 2-4 potential risks or areas of concern.\n5. Write a concise, balanced 3-6 sentence explanation justifying the evaluation.\n6. Output must be strictly valid JSON.",
+  "user_template": "Resume Profile:\n{resume_json}\n\nJob Requirements:\n{job_json}\n\nEvaluate the alignment and return the evaluation in JSON.",
+  "json_schema": {
+    "matched_skills": [
+      {
+        "skill": "string",
+        "resume_evidence": "string",
+        "confidence": "number (0.0 to 1.0)",
+        "category": "required or preferred"
+      }
+    ],
+    "missing_skills": [
+      {
+        "skill": "string",
+        "importance": "critical | important | nice_to_have",
+        "category": "string or null"
+      }
+    ],
+    "partial_skills": [
+      {
+        "skill": "string",
+        "related_resume_skill": "string",
+        "explanation": "string"
+      }
+    ],
+    "strengths": ["string"],
+    "risks": ["string"],
+    "explanation": "string (3-6 sentences)"
+  }
+}
