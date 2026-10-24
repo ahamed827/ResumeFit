@@ -19,7 +19,7 @@ jobs:
           POSTGRES_PASSWORD: resumefit_secure_password
           POSTGRES_DB: resumefit_db
         ports:
-          - 5432:5432
+          - "5432:5432"
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -28,7 +28,7 @@ jobs:
       redis:
         image: redis:7-alpine
         ports:
-          - 6379:6379
+          - "6379:6379"
         options: >-
           --health-cmd "redis-cli ping"
           --health-interval 10s
@@ -57,12 +57,12 @@ jobs:
 
       - name: Run Backend Tests
         env:
-          DATABASE_URL: sqlite+aiosqlite:///:memory:
-          DATABASE_SYNC_URL: sqlite:///:memory:
-          REDIS_URL: redis://localhost:6379/0
-          SECRET_KEY: ci-test-secret-key-minimum-32-chars-long-here!
-          ENVIRONMENT: test
-          LLM_PROVIDER: local_heuristic
+          DATABASE_URL: "sqlite+aiosqlite:///:memory:"
+          DATABASE_SYNC_URL: "sqlite:///:memory:"
+          REDIS_URL: "redis://localhost:6379/0"
+          SECRET_KEY: "ci-test-secret-key-minimum-32-chars-long-here!"
+          ENVIRONMENT: "test"
+          LLM_PROVIDER: "local_heuristic"
         run: |
           pytest backend/tests -v --cov=backend/app --cov-report=term-missing
 
@@ -88,7 +88,7 @@ jobs:
         working-directory: ./frontend
         run: npm run build
         env:
-          NEXT_PUBLIC_API_URL: http://localhost:8000/api/v1
+          NEXT_PUBLIC_API_URL: "http://localhost:8000/api/v1"
 
       - name: Run TypeScript type check
         working-directory: ./frontend
