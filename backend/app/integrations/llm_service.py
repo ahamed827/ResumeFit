@@ -143,17 +143,155 @@ class LLMService:
 
     def _heuristic_parse_resume(self, text: str) -> Dict[str, Any]:
         """Heuristic rule-based extractor for resume text."""
-        email_match = re.search(r"[\w\.-]+@[\w\.-]+\.\w+", text)
-        phone_match = re.search(r"(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}", text)
-        linkedin_match = re.search(r"(https?://(?:www\.)?linkedin\.com/in/[\w-]+)", text)
-        github_match = re.search(r"(https?://(?:www\.)?github\.com/[\w-]+)", text)
+        # Strip user prompt wrapper if present
+        clean_text = text
+        if "Resume Text:" in clean_text:
+            clean_text = clean_text.split("Resume Text:", 1)[1]
+        clean_text = clean_text.strip(" \"'\n\r")
 
-        lines = [line.strip() for line in text.split("\n") if line.strip()]
-        full_name = lines[0] if lines else "Candidate"
-        if len(full_name) > 50 or "@" in full_name:
-            full_name = "Candidate"
+        lines = [
+            l.strip()
+            for l in clean_text.split("\n")
+            if l.strip() and not l.strip().startswith('"""')
+        ]
 
-        # Known skills keyword lookup
+        # Full Name: Find first realistic name in top lines
+        candidate_name = "Candidate"
+        for line in lines[:8]:
+            lower_line = line.lower()
+            if any(
+                h in lower_line
+                for h in ["resume", "curriculum", "vitae", "profile", "summary", "contact"]
+            ):
+                continue
+            if (
+                len(line) <= 50
+                and "@" not in line
+                and not any(c.isdigit() for c in line)
+                and not any(line.startswith(c) for c in ["+", "-", "*", "•"])
+            ):
+                candidate_name = line
+                break
+
+        # Email & Phone
+        email_match = re.search(r"[\w\.-]+@[\w\.-]+\.\w+", clean_text)
+        phone_match = re.search(
+            r"(\+?\d{1,3}[-.\s]?)?\(?\d{3,5}\)?[-.\s]?\d{3,5}[-.\s]?\d{3,5}", clean_text
+        )
+
+        # LinkedIn & GitHub (supports with or without https:// protocol prefix)
+        linkedin_match = re.search(
+            r"(?:https?://)?(?:www\.)?linkedin\.com/in/([a-zA-Z0-9_\-]+)",
+            clean_text,
+            re.IGNORECASE,
+        )
+        github_match = re.search(
+            r"(?:https?://)?(?:www\.)?github\.com/([a-zA-Z0-9_\-]+)",
+            clean_text,
+            re.IGNORECASE,
+        )
+
+        # Professional Summary
+        summary = None
+        summary_match = re.search(
+            r"(?:PROFESSIONAL\s+SUMMARY|SUMMARY|PROFILE|OBJECTIVE)\s*([\s\S]*?)(?:EDUCATION|TECHNICAL\s+SKILLS|SKILLS|EXPERIENCE|WORK\s+EXPERIENCE|PROJECTS|$)",
+            clean_text,
+            re.IGNORECASE,
+        )
+        if summary_match and summary_match.group(1).strip():
+            summary = " ".join(summary_match.group(1).strip().split())
+
+        # Education extraction
+        education = []
+        edu_match = re.search(
+            r"EDUCATION\s*([\s\S]*?)(?:TECHNICAL\s+SKILLS|SKILLS|PROJECTS|EXPERIENCE|WORK\s+EXPERIENCE|CERTIFICATIONS|$)",
+            clean_text,
+            re.IGNORECASE,
+        )
+        edu_text = edu_match.group(1).strip() if edu_match else clean_text
+        degree_regex = re.compile(
+            r"\b(Bachelor(?:'?s)?(?:\s+of\s+[A-Za-z\s&]+)?|B\.?Tech|B\.?E\.?|B\.?S\.?(?:\b|\.)|B\.?Sc|BCA|BBA|"
+            r"Master(?:'?s)?(?:\s+of\s+[A-Za-z\s&]+)?|M\.?Tech|M\.?E\.?|M\.?S\.?(?:\b|\.)|M\.?Sc|MCA|MBA|"
+            r"Ph\.?D\.?|Doctorate|Diploma|Intermediate|Higher\s+Secondary|High\s+School)\b",
+            re.IGNORECASE,
+        )
+
+        curr_edu = None
+        for line in [l.strip() for l in edu_text.split("\n") if l.strip()]:
+            deg_m = degree_regex.search(line)
+            if deg_m:
+                if curr_edu:
+                    education.append(curr_edu)
+                field = "Computer Science"
+                if re.search(r"\bin\s+([A-Za-z\s&]+)", line, re.IGNORECASE):
+                    field = (
+                        re.search(r"\bin\s+([A-Za-z\s&]+)", line, re.IGNORECASE).group(1).strip()
+                    )
+                elif "(" in line and ")" in line:
+                    field = line.split("(")[1].split(")")[0].strip()
+
+                clean_degree = line
+                clean_degree = re.sub(
+                    r"\s*(?:August|July|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|\d{4}).*$",
+                    "",
+                    clean_degree,
+                    flags=re.IGNORECASE,
+                ).strip()
+                if not clean_degree:
+                    clean_degree = line
+
+                curr_edu = {
+                    "degree": clean_degree,
+                    "field_of_study": field,
+                    "institution": "University / Institute",
+                    "graduation_year": None,
+                    "gpa": None,
+                }
+            elif curr_edu:
+                if any(
+                    term in line.lower()
+                    for term in [
+                        "college",
+                        "university",
+                        "institute",
+                        "school",
+                        "academy",
+                        "campus",
+                    ]
+                ):
+                    curr_edu["institution"] = re.sub(
+                        r"\s*(?:CGPA|GPA|Score).*$", "", line, flags=re.IGNORECASE
+                    ).strip()
+                gpa_m = re.search(
+                    r"(?:CGPA|GPA|Score|Marks|Percentage)?[:\s]*(\d{1,2}(?:\.\d{1,2})?\s*(?:/\s*10|%)?)",
+                    line,
+                    re.IGNORECASE,
+                )
+                if gpa_m and any(k in line.lower() for k in ["cgpa", "score", "gpa", "marks", "%"]):
+                    curr_edu["gpa"] = gpa_m.group(0).strip()
+                years = re.findall(r"\b(20[0-2]\d)\b", line)
+                if years:
+                    curr_edu["graduation_year"] = years[-1]
+        if curr_edu:
+            education.append(curr_edu)
+
+        # Skills extraction: parse TECHNICAL SKILLS section + keyword fallback
+        skills_set = set()
+        skills_match = re.search(
+            r"(?:TECHNICAL\s+SKILLS|SKILLS)\s*([\s\S]*?)(?:PROJECTS|EXPERIENCE|WORK\s+EXPERIENCE|EDUCATION|CERTIFICATIONS|$)",
+            clean_text,
+            re.IGNORECASE,
+        )
+        if skills_match:
+            for line in skills_match.group(1).split("\n"):
+                line = line.strip()
+                if ":" in line:
+                    after_colon = line.split(":", 1)[1]
+                    for s in re.split(r"[,;•|/]", after_colon):
+                        item = s.strip().rstrip(".")
+                        if item and len(item) < 35:
+                            skills_set.add(item)
+
         known_skills = [
             "Python",
             "JavaScript",
@@ -168,6 +306,7 @@ class LLMService:
             "Redis",
             "AWS",
             "Git",
+            "GitHub",
             "FastAPI",
             "Django",
             "Flask",
@@ -181,82 +320,115 @@ class LLMService:
             "HTML5",
             "CSS3",
             "Machine Learning",
+            "Deep Learning",
+            "Generative AI",
             "PyTorch",
             "TensorFlow",
             "Pandas",
             "NumPy",
             "CI/CD",
-            "REST API",
+            "REST APIs",
+            "Prisma ORM",
         ]
-        found_skills = []
         for s in known_skills:
-            if re.search(r"\b" + re.escape(s) + r"\b", text, re.IGNORECASE):
-                found_skills.append(s)
+            if re.search(r"\b" + re.escape(s) + r"\b", clean_text, re.IGNORECASE):
+                skills_set.add(s)
 
-        # Detect education degrees
-        education = []
-        degree_patterns = [
-            r"(Bachelor\s+of\s+[A-Za-z\s]+|B\.?S\.?|B\.?Tech|Master\s+of\s+[A-Za-z\s]+|M\.?S\.?|Ph\.?D\.?)",
-            r"(Computer\s+Science|Information\s+Technology|Software\s+Engineering|Data\s+Science)",
-        ]
-        degree_match = re.search(degree_patterns[0], text, re.IGNORECASE)
-        field_match = re.search(degree_patterns[1], text, re.IGNORECASE)
-        year_match = re.search(r"\b(201\d|202\d)\b", text)
-
-        if degree_match or field_match:
-            education.append(
-                {
-                    "degree": degree_match.group(0).strip()
-                    if degree_match
-                    else "Bachelor of Science",
-                    "field_of_study": field_match.group(0).strip()
-                    if field_match
-                    else "Computer Science",
-                    "institution": "University / Institute",
-                    "graduation_year": year_match.group(0) if year_match else None,
-                    "gpa": None,
-                }
-            )
-
-        # Detect projects / experience
+        # Projects extraction
         projects = []
-        project_headers = re.findall(r"(?:Project|Portfolio):\s*([^\n]+)", text, re.IGNORECASE)
-        for proj in project_headers[:3]:
-            projects.append(
-                {
-                    "name": proj.strip(),
-                    "description": "Implemented technical solution and software architecture.",
-                    "technologies_used": found_skills[:3],
-                    "url": None,
-                    "achievements": ["Successfully delivered end-to-end functionality"],
-                }
-            )
-
-        # Summary
-        summary = None
-        summary_match = re.search(
-            r"(?:Summary|Profile|Objective):\s*([^\n]+(?:\n[^\n]+){1,3})", text, re.IGNORECASE
+        proj_match = re.search(
+            r"PROJECTS\s*([\s\S]*?)(?:CERTIFICATIONS|WORK\s+EXPERIENCE|EXPERIENCE|PUBLICATIONS|$)",
+            clean_text,
+            re.IGNORECASE,
         )
-        if summary_match:
-            summary = summary_match.group(1).strip()
-        else:
-            summary = f"Aspiring software engineer skilled in {', '.join(found_skills[:4])} with hands-on project experience."
+        if proj_match:
+            curr_proj = None
+            for line in proj_match.group(1).split("\n"):
+                l = line.strip()
+                if not l or l in ["\u2014", "GitHub", "GitLab"] or re.match(r"^20\d\d$", l):
+                    continue
+                is_bullet = l.startswith("\u2022") or l.startswith("-") or l.startswith("*")
+                is_tech = l.lower().startswith("tech stack:") or l.lower().startswith(
+                    "technologies:"
+                )
+                if not is_bullet and not is_tech and len(l) < 80 and not l.endswith("."):
+                    if curr_proj and curr_proj["name"]:
+                        projects.append(curr_proj)
+                    clean_title = re.sub(
+                        r"\s*[—–-]?\s*(?:GitHub|Gitlab)?\s*(?:20\d\d)?\s*$",
+                        "",
+                        l,
+                        flags=re.IGNORECASE,
+                    ).strip()
+                    curr_proj = {
+                        "name": clean_title,
+                        "description": "",
+                        "technologies_used": [],
+                        "url": None,
+                        "achievements": [],
+                    }
+                elif curr_proj:
+                    if is_tech:
+                        techs = re.sub(
+                            r"^(?:Tech Stack|Technologies)[:\s]*", "", l, flags=re.IGNORECASE
+                        )
+                        curr_proj["technologies_used"] = [
+                            t.strip().rstrip(".") for t in re.split(r"[,;•|]", techs) if t.strip()
+                        ]
+                    elif is_bullet:
+                        bullet_clean = re.sub(r"^[\u2022\-*]\s*", "", l).strip()
+                        if not curr_proj["description"]:
+                            curr_proj["description"] = bullet_clean
+                        curr_proj["achievements"].append(bullet_clean)
+                    else:
+                        if curr_proj["achievements"]:
+                            curr_proj["achievements"][-1] += " " + l
+                        elif curr_proj["description"]:
+                            curr_proj["description"] += " " + l
+            if curr_proj and curr_proj["name"]:
+                projects.append(curr_proj)
+
+        # Certifications extraction
+        certifications = []
+        cert_match = re.search(
+            r"CERTIFICATIONS?\s*([\s\S]*?)(?:PUBLICATIONS|ACHIEVEMENTS|LANGUAGES|$)",
+            clean_text,
+            re.IGNORECASE,
+        )
+        if cert_match:
+            for line in cert_match.group(1).split("\n"):
+                l = line.strip()
+                if l and (l.startswith("\u2022") or l.startswith("-") or l.startswith("*")):
+                    clean_cert = re.sub(r"^[\u2022\-*]\s*", "", l).strip()
+                    parts = re.split(r"\s*[—–-]\s*", clean_cert, 1)
+                    cert_name = parts[0].strip()
+                    issuer = parts[1].replace("Active", "").strip() if len(parts) > 1 else None
+                    certifications.append(
+                        {
+                            "name": cert_name,
+                            "issuing_organization": issuer,
+                            "issue_date": None,
+                            "credential_url": None,
+                        }
+                    )
 
         return {
-            "full_name": full_name,
-            "email": email_match.group(0) if email_match else None,
-            "phone": phone_match.group(0) if phone_match else None,
+            "full_name": candidate_name,
+            "email": email_match.group(0).strip() if email_match else None,
+            "phone": phone_match.group(0).strip() if phone_match else None,
             "location": None,
-            "linkedin": linkedin_match.group(0) if linkedin_match else None,
-            "github": github_match.group(0) if github_match else None,
+            "linkedin": (
+                f"https://linkedin.com/in/{linkedin_match.group(1)}" if linkedin_match else None
+            ),
+            "github": (f"https://github.com/{github_match.group(1)}" if github_match else None),
             "portfolio": None,
             "professional_summary": summary,
-            "skills": found_skills,
+            "skills": sorted(list(skills_set)),
             "education": education,
             "work_experience": [],
             "internships": [],
             "projects": projects,
-            "certifications": [],
+            "certifications": certifications,
             "achievements": [],
             "languages": ["English"],
         }

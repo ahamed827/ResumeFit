@@ -309,15 +309,45 @@ export default function ResumesPage() {
                       </div>
                       <div>
                         <span className="text-xs text-slate-400">LinkedIn</span>
-                        <p className="text-sm font-semibold text-indigo-400 truncate">
-                          {selectedResume.structured_profile.linkedin || "N/A"}
-                        </p>
+                        {selectedResume.structured_profile.linkedin ? (
+                          <p className="text-sm font-semibold text-indigo-400 truncate">
+                            <a
+                              href={
+                                selectedResume.structured_profile.linkedin.startsWith("http")
+                                  ? selectedResume.structured_profile.linkedin
+                                  : `https://${selectedResume.structured_profile.linkedin}`
+                              }
+                              target="_blank"
+                              rel="noreferrer"
+                              className="hover:underline"
+                            >
+                              {selectedResume.structured_profile.linkedin}
+                            </a>
+                          </p>
+                        ) : (
+                          <p className="text-sm font-semibold text-slate-400">N/A</p>
+                        )}
                       </div>
                       <div>
                         <span className="text-xs text-slate-400">GitHub</span>
-                        <p className="text-sm font-semibold text-indigo-400 truncate">
-                          {selectedResume.structured_profile.github || "N/A"}
-                        </p>
+                        {selectedResume.structured_profile.github ? (
+                          <p className="text-sm font-semibold text-indigo-400 truncate">
+                            <a
+                              href={
+                                selectedResume.structured_profile.github.startsWith("http")
+                                  ? selectedResume.structured_profile.github
+                                  : `https://${selectedResume.structured_profile.github}`
+                              }
+                              target="_blank"
+                              rel="noreferrer"
+                              className="hover:underline"
+                            >
+                              {selectedResume.structured_profile.github}
+                            </a>
+                          </p>
+                        ) : (
+                          <p className="text-sm font-semibold text-slate-400">N/A</p>
+                        )}
                       </div>
                     </div>
 
@@ -373,13 +403,48 @@ export default function ResumesPage() {
                       <div>
                         <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Education</h4>
                         <div className="space-y-2">
-                          {selectedResume.structured_profile.education.map((edu, idx) => (
-                            <div key={idx} className="p-3 rounded-lg bg-slate-950 border border-slate-800 flex justify-between text-xs">
-                              <div>
-                                <span className="font-semibold text-white">{edu.degree} in {edu.field_of_study}</span>
-                                <p className="text-slate-400">{edu.institution}</p>
+                          {selectedResume.structured_profile.education.map((edu, idx) => {
+                            const degreeTitle = edu.degree || "Degree";
+                            const showField =
+                              edu.field_of_study &&
+                              !degreeTitle.toLowerCase().includes(edu.field_of_study.toLowerCase());
+                            return (
+                              <div
+                                key={idx}
+                                className="p-3 rounded-lg bg-slate-950 border border-slate-800 flex justify-between text-xs"
+                              >
+                                <div>
+                                  <span className="font-semibold text-white">
+                                    {degreeTitle}
+                                    {showField ? ` in ${edu.field_of_study}` : ""}
+                                  </span>
+                                  <p className="text-slate-400 mt-0.5">{edu.institution || "University / Institute"}</p>
+                                  {edu.gpa && <p className="text-emerald-400 text-[11px] mt-0.5">{edu.gpa}</p>}
+                                </div>
+                                <span className="text-slate-400 font-mono">{edu.graduation_year}</span>
                               </div>
-                              <span className="text-slate-400">{edu.graduation_year}</span>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Certifications */}
+                    {selectedResume.structured_profile.certifications?.length > 0 && (
+                      <div>
+                        <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                          Certifications ({selectedResume.structured_profile.certifications.length})
+                        </h4>
+                        <div className="space-y-1.5">
+                          {selectedResume.structured_profile.certifications.map((cert, idx) => (
+                            <div
+                              key={idx}
+                              className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex justify-between text-xs"
+                            >
+                              <span className="font-semibold text-white">{cert.name}</span>
+                              {cert.issuing_organization && (
+                                <span className="text-slate-400">{cert.issuing_organization}</span>
+                              )}
                             </div>
                           ))}
                         </div>
