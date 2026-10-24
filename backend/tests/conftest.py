@@ -11,6 +11,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 # Set test environment
 os.environ["ENVIRONMENT"] = "test"
 os.environ["SECRET_KEY"] = "test-secret-key-at-least-32-chars-long-for-tests!"
+os.environ["DATABASE_URL"] = "sqlite+aiosqlite:///:memory:"
+os.environ["DATABASE_SYNC_URL"] = "sqlite:///:memory:"
 os.environ["LLM_PROVIDER"] = "local_heuristic"
 os.environ["STORAGE_BACKEND"] = "local"
 os.environ["LOCAL_STORAGE_DIR"] = "./test_uploads"

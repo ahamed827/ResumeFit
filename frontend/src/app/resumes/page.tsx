@@ -296,161 +296,165 @@ export default function ResumesPage() {
                 )}
 
                 {selectedResume.structured_profile ? (
-                  <div className="space-y-6">
-                    {/* Candidate Basic Info */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-slate-950 border border-slate-800">
-                      <div>
-                        <span className="text-xs text-slate-400">Full Name</span>
-                        <p className="text-sm font-semibold text-white">{selectedResume.structured_profile.full_name || "N/A"}</p>
-                      </div>
-                      <div>
-                        <span className="text-xs text-slate-400">Email Address</span>
-                        <p className="text-sm font-semibold text-white">{selectedResume.structured_profile.email || "N/A"}</p>
-                      </div>
-                      <div>
-                        <span className="text-xs text-slate-400">LinkedIn</span>
-                        {selectedResume.structured_profile.linkedin ? (
-                          <p className="text-sm font-semibold text-indigo-400 truncate">
-                            <a
-                              href={
-                                selectedResume.structured_profile.linkedin.startsWith("http")
-                                  ? selectedResume.structured_profile.linkedin
-                                  : `https://${selectedResume.structured_profile.linkedin}`
-                              }
-                              target="_blank"
-                              rel="noreferrer"
-                              className="hover:underline"
-                            >
-                              {selectedResume.structured_profile.linkedin}
-                            </a>
-                          </p>
-                        ) : (
-                          <p className="text-sm font-semibold text-slate-400">N/A</p>
-                        )}
-                      </div>
-                      <div>
-                        <span className="text-xs text-slate-400">GitHub</span>
-                        {selectedResume.structured_profile.github ? (
-                          <p className="text-sm font-semibold text-indigo-400 truncate">
-                            <a
-                              href={
-                                selectedResume.structured_profile.github.startsWith("http")
-                                  ? selectedResume.structured_profile.github
-                                  : `https://${selectedResume.structured_profile.github}`
-                              }
-                              target="_blank"
-                              rel="noreferrer"
-                              className="hover:underline"
-                            >
-                              {selectedResume.structured_profile.github}
-                            </a>
-                          </p>
-                        ) : (
-                          <p className="text-sm font-semibold text-slate-400">N/A</p>
-                        )}
-                      </div>
-                    </div>
+                  (() => {
+                    const profile = selectedResume.structured_profile;
+                    const linkedinUrl = profile.linkedin?.trim();
+                    const githubUrl = profile.github?.trim();
+                    const certs = profile.certifications || [];
+                    const eduList = profile.education || [];
+                    const projList = profile.projects || [];
+                    const skillsList = profile.skills || [];
 
-                    {/* Extracted Skills Badges */}
-                    <div>
-                      <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                        Extracted Skills ({selectedResume.structured_profile.skills?.length || 0})
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedResume.structured_profile.skills?.length ? (
-                          selectedResume.structured_profile.skills.map((skill, idx) => (
-                            <span
-                              key={idx}
-                              className="px-2.5 py-1 rounded-md text-xs font-semibold bg-indigo-500/10 border border-indigo-500/20 text-indigo-300"
-                            >
-                              {skill}
-                            </span>
-                          ))
-                        ) : (
-                          <span className="text-xs text-slate-500">No skills identified.</span>
-                        )}
-                      </div>
-                    </div>
+                    return (
+                      <div className="space-y-6">
+                        {/* Candidate Basic Info */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-slate-950 border border-slate-800">
+                          <div>
+                            <span className="text-xs text-slate-400">Full Name</span>
+                            <p className="text-sm font-semibold text-white">{profile.full_name || "N/A"}</p>
+                          </div>
+                          <div>
+                            <span className="text-xs text-slate-400">Email Address</span>
+                            <p className="text-sm font-semibold text-white">{profile.email || "N/A"}</p>
+                          </div>
+                          <div>
+                            <span className="text-xs text-slate-400">LinkedIn</span>
+                            {linkedinUrl ? (
+                              <p className="text-sm font-semibold text-indigo-400 truncate">
+                                <a
+                                  href={linkedinUrl.startsWith("http") ? linkedinUrl : `https://${linkedinUrl}`}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="hover:underline"
+                                >
+                                  {linkedinUrl}
+                                </a>
+                              </p>
+                            ) : (
+                              <p className="text-sm font-semibold text-slate-400">N/A</p>
+                            )}
+                          </div>
+                          <div>
+                            <span className="text-xs text-slate-400">GitHub</span>
+                            {githubUrl ? (
+                              <p className="text-sm font-semibold text-indigo-400 truncate">
+                                <a
+                                  href={githubUrl.startsWith("http") ? githubUrl : `https://${githubUrl}`}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="hover:underline"
+                                >
+                                  {githubUrl}
+                                </a>
+                              </p>
+                            ) : (
+                              <p className="text-sm font-semibold text-slate-400">N/A</p>
+                            )}
+                          </div>
+                        </div>
 
-                    {/* Featured Projects */}
-                    {selectedResume.structured_profile.projects?.length > 0 && (
-                      <div>
-                        <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                          Extracted Projects
-                        </h4>
-                        <div className="space-y-3">
-                          {selectedResume.structured_profile.projects.map((proj, idx) => (
-                            <div key={idx} className="p-3.5 rounded-lg bg-slate-950 border border-slate-800">
-                              <p className="text-sm font-semibold text-white">{proj.name}</p>
-                              {proj.description && <p className="text-xs text-slate-400 mt-1">{proj.description}</p>}
-                              {proj.technologies_used?.length > 0 && (
-                                <div className="mt-2 flex flex-wrap gap-1.5">
-                                  {proj.technologies_used.map((t, i) => (
-                                    <span key={i} className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">
-                                      {t}
-                                    </span>
-                                  ))}
+                        {/* Extracted Skills Badges */}
+                        <div>
+                          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                            Extracted Skills ({skillsList.length})
+                          </h4>
+                          <div className="flex flex-wrap gap-2">
+                            {skillsList.length ? (
+                              skillsList.map((skill, idx) => (
+                                <span
+                                  key={idx}
+                                  className="px-2.5 py-1 rounded-md text-xs font-semibold bg-indigo-500/10 border border-indigo-500/20 text-indigo-300"
+                                >
+                                  {skill}
+                                </span>
+                              ))
+                            ) : (
+                              <span className="text-xs text-slate-500">No skills identified.</span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Featured Projects */}
+                        {projList.length > 0 && (
+                          <div>
+                            <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                              Extracted Projects ({projList.length})
+                            </h4>
+                            <div className="space-y-3">
+                              {projList.map((proj, idx) => (
+                                <div key={idx} className="p-3.5 rounded-lg bg-slate-950 border border-slate-800">
+                                  <p className="text-sm font-semibold text-white">{proj.name}</p>
+                                  {proj.description && <p className="text-xs text-slate-400 mt-1">{proj.description}</p>}
+                                  {proj.technologies_used?.length > 0 && (
+                                    <div className="mt-2 flex flex-wrap gap-1.5">
+                                      {proj.technologies_used.map((t, i) => (
+                                        <span key={i} className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                                          {t}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  )}
                                 </div>
-                              )}
+                              ))}
                             </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                          </div>
+                        )}
 
-                    {/* Education */}
-                    {selectedResume.structured_profile.education?.length > 0 && (
-                      <div>
-                        <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Education</h4>
-                        <div className="space-y-2">
-                          {selectedResume.structured_profile.education.map((edu, idx) => {
-                            const degreeTitle = edu.degree || "Degree";
-                            const showField =
-                              edu.field_of_study &&
-                              !degreeTitle.toLowerCase().includes(edu.field_of_study.toLowerCase());
-                            return (
-                              <div
-                                key={idx}
-                                className="p-3 rounded-lg bg-slate-950 border border-slate-800 flex justify-between text-xs"
-                              >
-                                <div>
-                                  <span className="font-semibold text-white">
-                                    {degreeTitle}
-                                    {showField ? ` in ${edu.field_of_study}` : ""}
-                                  </span>
-                                  <p className="text-slate-400 mt-0.5">{edu.institution || "University / Institute"}</p>
-                                  {edu.gpa && <p className="text-emerald-400 text-[11px] mt-0.5">{edu.gpa}</p>}
+                        {/* Education */}
+                        {eduList.length > 0 && (
+                          <div>
+                            <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Education</h4>
+                            <div className="space-y-2">
+                              {eduList.map((edu, idx) => {
+                                const degreeTitle = edu.degree || "Degree";
+                                const showField =
+                                  edu.field_of_study &&
+                                  !degreeTitle.toLowerCase().includes(edu.field_of_study.toLowerCase());
+                                return (
+                                  <div
+                                    key={idx}
+                                    className="p-3 rounded-lg bg-slate-950 border border-slate-800 flex justify-between text-xs"
+                                  >
+                                    <div>
+                                      <span className="font-semibold text-white">
+                                        {degreeTitle}
+                                        {showField ? ` in ${edu.field_of_study}` : ""}
+                                      </span>
+                                      <p className="text-slate-400 mt-0.5">{edu.institution || "University / Institute"}</p>
+                                      {edu.gpa && <p className="text-emerald-400 text-[11px] mt-0.5">{edu.gpa}</p>}
+                                    </div>
+                                    <span className="text-slate-400 font-mono">{edu.graduation_year}</span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Certifications */}
+                        {certs.length > 0 && (
+                          <div>
+                            <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                              Certifications ({certs.length})
+                            </h4>
+                            <div className="space-y-1.5">
+                              {certs.map((cert: any, idx: number) => (
+                                <div
+                                  key={idx}
+                                  className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex justify-between text-xs"
+                                >
+                                  <span className="font-semibold text-white">{cert.name}</span>
+                                  {cert.issuing_organization && (
+                                    <span className="text-slate-400">{cert.issuing_organization}</span>
+                                  )}
                                 </div>
-                                <span className="text-slate-400 font-mono">{edu.graduation_year}</span>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Certifications */}
-                    {selectedResume.structured_profile.certifications?.length > 0 && (
-                      <div>
-                        <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                          Certifications ({selectedResume.structured_profile.certifications.length})
-                        </h4>
-                        <div className="space-y-1.5">
-                          {selectedResume.structured_profile.certifications.map((cert, idx) => (
-                            <div
-                              key={idx}
-                              className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex justify-between text-xs"
-                            >
-                              <span className="font-semibold text-white">{cert.name}</span>
-                              {cert.issuing_organization && (
-                                <span className="text-slate-400">{cert.issuing_organization}</span>
-                              )}
+                              ))}
                             </div>
-                          ))}
-                        </div>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
+                    );
+                  })()
                 ) : (
                   <div className="py-8 text-center text-slate-500 text-sm">
                     No structured profile available for this document.
